@@ -13,7 +13,7 @@ password = "123"
 facebook_friends=["Loai","Yonathan","Adan", "George", "Fouad", "Celina"]
 
 
-@app.route('/')  # '/' for the default page
+@app.route('/')
 def login():
   return render_template('login.html')
   
@@ -30,12 +30,15 @@ def homepage():
             return render_template('home.html')
 
 
-@app.route('/home/'<string:username>'')
-def hello(username):
+@app.route('/home', methods=['GET', 'POST'])
+def hello():
     return render_template(
-        'home.html', n = username)
+        'home.html', y = facebook_friends)
+
+@app.route('/friend_exists/<string:name>')
+def fe(name):
+    is_friend = name in facebook_friends
+    return render_template('friend_exists.html', n = is_friend)
     
-if __name__ == "__main__":  # Makes sure this is the main process
-    app.run( # Starts the site
-    debug=True
-    )
+if __name__ == "__main__":
+    app.run(debug=True)
